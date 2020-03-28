@@ -13,25 +13,27 @@ diller_menu["Автомобили"] = {function(player,choice)
     local choose = function(player, choice)
       if user_id then
         local vname = v[1]
-        local prompt = vRP.prompt(player, 'Цена продажи?', '') -- how cell match?
-        local amount = parseInt(prompt) -- This 1000.000000 in 1000
         local nearst = vRPclient.getNearestPlayer(player, 5)
         if nearst then
           local nplayer = vRP.getUserId(nearst)
-        if prompt ~= nil or prompt ~= "" then
-          if vRP.tryFullPayment(player,amount) then 
-            vRPclient._notify(player,"~w~Вы успешно продали автомобиль ~g~"..k.."~g~ за ~w~"..amount.."")
-            vRPclient._notify(nplayer,"~w~Вы успешно купили автомобиль за ~g~"..amount.."$")
-            vRPclient._notify(nplayer,"~w~Автомобиль доставят в течении 1-2 часов")
-            SetTimeout(20000,function() -- Wait 20 second for give cars
-              vRPclient._notify(nplayer,"~w~Автомобиль ~b~"..k.." ~w~доставили к Вам в гараж!")
-              vRP.execute("vRP/add_vehicle", {user_id = nplayer, vehicle = vname}) -- add player cars with DataBase VRP
+          if nplayer then
+            local prompt = vRP.prompt(player, 'Цена продажи?', '') -- how cell match?
+            local amount = parseInt(prompt) -- This 1000.000000 in 1000
+            if prompt ~= nil or prompt ~= "" then
+              if vRP.tryFullPayment(nplayer,amount) then 
+                vRPclient._notify(player,"~w~Вы успешно продали автомобиль ~g~"..k.."~g~ за ~w~"..amount.."")
+                vRPclient._notify(nplayer,"~w~Вы успешно купили автомобиль за ~g~"..amount.."$")
+                vRPclient._notify(nplayer,"~w~Автомобиль доставят в течении 1-2 часов")
+                SetTimeout(20000,function() -- Wait 20 second for give cars
+                  vRPclient._notify(nplayer,"~w~Автомобиль ~b~"..k.." ~w~доставили к Вам в гараж!")
+                  vRP.execute("vRP/add_vehicle", {user_id = nplayer, vehicle = vname}) -- add player cars with DataBase VRP
             end)
           end
         end
       end
     end
   end
+end
     submenu[k] = {choose, v[2]} -- build menu with cars
     vRP.openMenu(player,submenu)
   end
