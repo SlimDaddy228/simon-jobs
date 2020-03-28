@@ -27,13 +27,19 @@ diller_menu["Автомобили"] = {function(player,choice)
                 SetTimeout(20000,function() -- Wait 20 second for give cars
                   vRPclient._notify(nplayer,"~w~Автомобиль ~b~"..k.." ~w~доставили к Вам в гараж!")
                   vRP.execute("vRP/add_vehicle", {user_id = nplayer, vehicle = vname}) -- add player cars with DataBase VRP
-            end)
+                end)
+              else
+                vRPclient._notify(nplayer,"~r~Недостаточно средств")
+              end
+            else
+              vRPclient._notify(nplayer,"~r~Значение неверное")
+            end
+          else
+            vRPclient._notify(nplayer,"~r~Рядом нет игрока")
           end
         end
       end
     end
-  end
-end
     submenu[k] = {choose, v[2]} -- build menu with cars
     vRP.openMenu(player,submenu)
   end
