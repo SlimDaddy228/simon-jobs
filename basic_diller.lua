@@ -19,7 +19,7 @@ diller_menu["Автомобили"] = {function(player,choice)
           if nplayer then
             local prompt = vRP.prompt(player, 'Цена продажи?', '') -- how cell match?
             local amount = parseInt(prompt) -- This 1000.000000 in 1000
-            if prompt ~= nil or prompt ~= "" then
+            if amount ~= nil or amount ~= "" and > 0 then
               if vRP.tryFullPayment(nplayer,amount) then 
                 vRPclient._notify(player,"~w~Вы успешно продали автомобиль ~g~"..k.."~g~ за ~w~"..amount.."")
                 vRPclient._notify(nplayer,"~w~Вы успешно купили автомобиль за ~g~"..amount.."$")
